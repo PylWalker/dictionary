@@ -53,13 +53,14 @@ public class DictionaryApp extends javax.swing.JFrame {
         jTextSpelling = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jBtTranslate = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListSuggest = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextExplain = new javax.swing.JTextPane();
+        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         jLabelSpelling = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jButtonInsertNewWord = new javax.swing.JButton();
@@ -108,10 +109,6 @@ public class DictionaryApp extends javax.swing.JFrame {
         jLabel4.setText("Detail");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, 40, 30));
 
-        jLabel3.setBackground(new java.awt.Color(102, 102, 255));
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dictionary/Icons/underBanner.jpg"))); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 640, 30));
-
         jBtTranslate.setText("🔍");
         jBtTranslate.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jBtTranslate.addActionListener(new java.awt.event.ActionListener() {
@@ -140,13 +137,27 @@ public class DictionaryApp extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 410, 320));
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dictionary/Icons/iconClear.jpg"))); // NOI18N
+        jButton1.setText("Clear");
+        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 90, 25));
+
+        jLabel3.setBackground(new java.awt.Color(102, 102, 255));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dictionary/Icons/underBanner.jpg"))); // NOI18N
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 640, 30));
+
         jLabelSpelling.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         getContentPane().add(jLabelSpelling, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 390, 30));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dictionary/Icons/background.jpg"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 400, 370));
 
-        jButtonInsertNewWord.setText("Insert New Word");
+        jButtonInsertNewWord.setText("Insert New Word ➕");
         jButtonInsertNewWord.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButtonInsertNewWordMouseClicked(evt);
@@ -155,21 +166,23 @@ public class DictionaryApp extends javax.swing.JFrame {
         getContentPane().add(jButtonInsertNewWord, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 190, 30));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 100, -1, -1));
 
+        jButtonDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dictionary/Icons/iconDelete.jpg"))); // NOI18N
         jButtonDelete.setText("Delete");
         jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDeleteActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, 67, -1));
+        getContentPane().add(jButtonDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, 90, -1));
 
+        jButtonUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dictionary/Icons/iconUpdate.jpg"))); // NOI18N
         jButtonUpdate.setText("Update");
         jButtonUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonUpdateActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 260, -1, -1));
+        getContentPane().add(jButtonUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 90, -1));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dictionary/Icons/background.jpg"))); // NOI18N
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 240, 390));
@@ -278,6 +291,14 @@ public class DictionaryApp extends javax.swing.JFrame {
         jListSuggest.setModel(ls.listSuggest(spelling));
     }//GEN-LAST:event_jTextSpellingMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        jTextSpelling.setText("");
+        jLabelSpelling.setText("");
+        jTextExplain.setText("");
+        DefaultListModel dlm = new DefaultListModel();
+        jListSuggest.setModel(dlm);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -315,6 +336,7 @@ public class DictionaryApp extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtTranslate;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonInsertNewWord;
     private javax.swing.JButton jButtonUpdate;
