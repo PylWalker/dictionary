@@ -91,6 +91,11 @@ public class DictionaryApp extends javax.swing.JFrame {
         jLabel2.setText("Search 🔍");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 70, 30));
 
+        jTextSpelling.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextSpellingMouseClicked(evt);
+            }
+        });
         jTextSpelling.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextSpellingKeyPressed(evt);
@@ -248,7 +253,8 @@ public class DictionaryApp extends javax.swing.JFrame {
             jTextExplain.setText("");
             jLabelSpelling.setText("");
             ListSuggest ls = new ListSuggest();
-            jListSuggest.setModel(ls.listSuggest(spelling));
+            String spelling2 = jTextSpelling.getText();
+            jListSuggest.setModel(ls.listSuggest(spelling2));
             JOptionPane.showMessageDialog(null,"Delete \""+spelling+"\" Success!!!");
         } else{
             JOptionPane.showMessageDialog(null,"Fail!!!");
@@ -265,6 +271,12 @@ public class DictionaryApp extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Fail!!!");
         }
     }//GEN-LAST:event_jButtonUpdateActionPerformed
+
+    private void jTextSpellingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextSpellingMouseClicked
+        String spelling = jTextSpelling.getText();
+        ListSuggest ls = new ListSuggest();
+        jListSuggest.setModel(ls.listSuggest(spelling));
+    }//GEN-LAST:event_jTextSpellingMouseClicked
 
     /**
      * @param args the command line arguments
@@ -324,6 +336,6 @@ public class DictionaryApp extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextPane jTextExplain;
     private javax.swing.JTextPane jTextPane1;
-    private javax.swing.JTextField jTextSpelling;
+    public javax.swing.JTextField jTextSpelling;
     // End of variables declaration//GEN-END:variables
 }

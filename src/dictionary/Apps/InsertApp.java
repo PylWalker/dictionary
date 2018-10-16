@@ -6,6 +6,7 @@
 package dictionary.Apps;
 
 import dictionary.Function.InsertWord;
+import dictionary.Function.ListSuggest;
 import dictionary.Function.SearchWord;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -133,6 +134,10 @@ public class InsertApp extends javax.swing.JFrame {
             InsertWord iw = new InsertWord();
             if(iw.insertWord(spelling, explain, kindOfWord) == 1){
                 JOptionPane.showMessageDialog(null,"Insert \""+spelling+"\" Success!!!");
+                DictionaryApp da = new DictionaryApp();
+                spelling = da.jTextSpelling.getText();
+                ListSuggest ls = new ListSuggest();
+                da.jListSuggest.setModel(ls.listSuggest(spelling));
             } else{
                 JOptionPane.showMessageDialog(null,"Fail!!!");
             }
