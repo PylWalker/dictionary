@@ -36,4 +36,10 @@ public class EditStr {
             str = str.replace("'", "daunhay");
         return str;
     }
+    
+    public String editStr3(String str){
+        if(str.contains("'"))
+            str = str.replace("'", "\\\'");
+        return str;
+    }
 }

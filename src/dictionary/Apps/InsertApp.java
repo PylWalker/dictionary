@@ -52,7 +52,7 @@ public class InsertApp extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jComboBoxKindOfWord = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButtonInsert = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jEditorExplain = new javax.swing.JEditorPane();
         jLabel7 = new javax.swing.JLabel();
@@ -69,7 +69,7 @@ public class InsertApp extends javax.swing.JFrame {
         jLabel3.setText("Insert New Word ➕");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 35, -1, -1));
 
-        jLabel2.setBackground(new java.awt.Color(0, 51, 255));
+        jLabel2.setBackground(new java.awt.Color(51, 51, 255));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dictionary/Icons/bannerInsert.jpg"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 410, 28));
 
@@ -80,7 +80,7 @@ public class InsertApp extends javax.swing.JFrame {
         jLabel5.setText("Kind of words");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 90, 20));
 
-        jComboBoxKindOfWord.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose kind of words", "Noun", "Adjective", "Adverb", "Verb" }));
+        jComboBoxKindOfWord.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose kind of words", "Noun", "Adjective", "Adverb", "Verb", "Phrase", "Sentence" }));
         jComboBoxKindOfWord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxKindOfWordActionPerformed(evt);
@@ -91,13 +91,13 @@ public class InsertApp extends javax.swing.JFrame {
         jLabel6.setText("Explain");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 145, -1, 20));
 
-        jButton1.setText("Insert");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonInsert.setText("Insert");
+        jButtonInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonInsertActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, -1, -1));
+        getContentPane().add(jButtonInsert, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, -1, -1));
 
         jScrollPane1.setViewportView(jEditorExplain);
 
@@ -114,23 +114,36 @@ public class InsertApp extends javax.swing.JFrame {
         //jTextExplain.setText(String.valueOf(tmp));
     }//GEN-LAST:event_jComboBoxKindOfWordActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInsertActionPerformed
         String spelling = jTextString.getText();
         String explain = jEditorExplain.getText();
         int tmp = jComboBoxKindOfWord.getSelectedIndex();
         String kindOfWord = null;
-        if(tmp == 1)
-            kindOfWord = "danh từ";
-        else if(tmp == 2)
-            kindOfWord = "tính từ";
-        else if(tmp == 3)
-            kindOfWord = "trạng từ";
-        else if(tmp == 4)
-            kindOfWord = "động từ";
-        else
-            kindOfWord = "";
+        switch (tmp) {
+            case 1:
+                kindOfWord = "danh từ";
+                break;
+            case 2:
+                kindOfWord = "tính từ";
+                break;
+            case 3:
+                kindOfWord = "trạng từ";
+                break;
+            case 4:
+                kindOfWord = "động từ";
+                break;
+            case 5:
+                kindOfWord = "cụm từ";
+                break;
+            case 6:
+                kindOfWord = "câu";
+                break;
+            default:
+                kindOfWord = "";
+                break;
+        }
         SearchWord sw = new SearchWord();
-        if(sw.searchWord(spelling)==""){
+        if(sw.searchWord(spelling)==null){
             InsertWord iw = new InsertWord();
             if(iw.insertWord(spelling, explain, kindOfWord) == 1){
                 JOptionPane.showMessageDialog(null,"Insert \""+spelling+"\" Success!!!");
@@ -144,7 +157,7 @@ public class InsertApp extends javax.swing.JFrame {
         } else{
             JOptionPane.showMessageDialog(null,"This word already exists in the dictionary");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonInsertActionPerformed
     
     public void openInsertApp() {
         try {
@@ -208,7 +221,7 @@ public class InsertApp extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonInsert;
     private javax.swing.JComboBox<String> jComboBoxKindOfWord;
     private javax.swing.JEditorPane jEditorExplain;
     private javax.swing.JLabel jLabel1;

@@ -19,14 +19,14 @@ import dictionary.Function.EditStr;
  * @author chinh
  */
 public class UpdateWord {
-    public int updateWord(String spelling,String explain){
+    public int updateWord(String spellingOld,String spellingNew,String explainNew){
         int tmp = 0;
         try {
             Connection connection = ConnectionUtils.getMyConnection();
             Statement statement = connection.createStatement();
             EditStr es = new EditStr();
-            explain = es.editStr2(explain);
-            String sql = "UPDATE word SET spelling = '"+spelling+"',`explain` = '"+explain+"' WHERE spelling = '"+spelling+"'";
+            explainNew = es.editStr2(explainNew);
+            String sql = "UPDATE word SET spelling = '"+spellingNew+"',`explain` = '"+explainNew+"' WHERE spelling = '"+spellingOld+"'";
             System.out.println(sql);
             tmp = statement.executeUpdate(sql);
         } catch (SQLException ex) {

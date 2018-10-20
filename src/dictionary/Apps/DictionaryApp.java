@@ -10,13 +10,10 @@ import dictionary.Function.DeleteWord;
 import dictionary.Function.EditStr;
 import dictionary.Function.ListSuggest;
 import dictionary.Function.SearchWord;
-import dictionary.Function.UpdateWord;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -31,8 +28,20 @@ public class DictionaryApp extends javax.swing.JFrame {
     /**
      * Creates new form DictionaryApp
      */
+    
+    public static String spelling;
+    public static String explain;
+    
     public DictionaryApp() {
         initComponents();
+    }
+    
+    public String getSpelling(){
+        return jLabelSpelling.getText();
+    }
+    
+    public String getExplain(){
+        return jTextExplain.getText();
     }
 
     /**
@@ -44,10 +53,6 @@ public class DictionaryApp extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPopupMenu4 = new javax.swing.JPopupMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
         jLabelBanner = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextSpelling = new javax.swing.JTextField();
@@ -69,16 +74,6 @@ public class DictionaryApp extends javax.swing.JFrame {
         jButtonUpdate = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
 
-        jMenuItem1.setText("jMenuItem1");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jPopupMenu4.add(jMenuItem1);
-
-        jScrollPane1.setViewportView(jTextPane1);
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dictionary");
         setLocation(new java.awt.Point(350, 100));
@@ -92,11 +87,6 @@ public class DictionaryApp extends javax.swing.JFrame {
         jLabel2.setText("Search 🔍");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 70, 30));
 
-        jTextSpelling.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTextSpellingMouseClicked(evt);
-            }
-        });
         jTextSpelling.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextSpellingKeyPressed(evt);
@@ -126,7 +116,7 @@ public class DictionaryApp extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jListSuggest);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 210, 130));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 210, 120));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dictionary/Icons/background.jpg"))); // NOI18N
         jLabel1.setToolTipText("");
@@ -138,14 +128,14 @@ public class DictionaryApp extends javax.swing.JFrame {
         getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 410, 320));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dictionary/Icons/iconClear.jpg"))); // NOI18N
-        jButton1.setText("Clear");
+        jButton1.setText("Refresh");
         jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 90, 25));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 90, 27));
 
         jLabel3.setBackground(new java.awt.Color(102, 102, 255));
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dictionary/Icons/underBanner.jpg"))); // NOI18N
@@ -193,30 +183,31 @@ public class DictionaryApp extends javax.swing.JFrame {
     private void jBtTranslateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtTranslateActionPerformed
         SearchWord sw = new SearchWord();
         String spelling = jTextSpelling.getText();
-        jLabelSpelling.setText(spelling);
-        jTextExplain.setText(sw.searchWord(spelling));
+        if(sw.searchWord(spelling) != null){
+            jLabelSpelling.setText(spelling);
+            jTextExplain.setText(sw.searchWord(spelling));
+            System.out.println(sw.searchWord(spelling));
+        } else{
+            JOptionPane.showMessageDialog(null,"This word doesn't exists in this dictionary!!!");
+        }
     }//GEN-LAST:event_jBtTranslateActionPerformed
 
     private void jTextSpellingKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextSpellingKeyPressed
-        try {
-            Connection connection = ConnectionUtils.getMyConnection();
-            Statement statement = connection.createStatement();
-            jTextExplain.setText("");
-            jLabelSpelling.setText("");
-            String spelling = jTextSpelling.getText();
-            if(evt.getKeyChar() == 8&&spelling.length()!=0){
-                spelling = spelling.substring(0, spelling.length()-1);
-                ListSuggest ls = new ListSuggest();
-                jListSuggest.setModel(ls.listSuggest(spelling));
-            } else{
-                spelling = spelling + evt.getKeyChar();
+        jTextExplain.setText("");
+        jLabelSpelling.setText("");
+        String spelling = jTextSpelling.getText();
+        int tmp = evt.getKeyCode();
+        if(tmp == 8&&spelling.length()>1){
+            spelling = spelling.substring(0, spelling.length()-1);
+            if(spelling!=""){
                 ListSuggest ls = new ListSuggest();
                 jListSuggest.setModel(ls.listSuggest(spelling));
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(DictionaryApp.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DictionaryApp.class.getName()).log(Level.SEVERE, null, ex);
+        } else if(tmp>=65&&tmp<=90||tmp==39||tmp==32||tmp==45){
+            spelling = spelling + evt.getKeyChar();
+            ListSuggest ls = new ListSuggest();
+            jListSuggest.setModel(ls.listSuggest(spelling));
+            System.out.println(tmp);
         }
     }//GEN-LAST:event_jTextSpellingKeyPressed
 
@@ -225,39 +216,27 @@ public class DictionaryApp extends javax.swing.JFrame {
             Connection connection = ConnectionUtils.getMyConnection();
             Statement statement = connection.createStatement();
             String spelling = jListSuggest.getSelectedValue();
+            EditStr es = new EditStr();
+            spelling = es.editStr3(spelling);
             String sql = "SELECT word.explain FROM word WHERE word.spelling = '"+spelling+"'";
             ResultSet rs = statement.executeQuery(sql);
             if(rs.next()){
                 jLabelSpelling.setText(spelling);
-                EditStr es = new EditStr();
                 jTextExplain.setText(es.editStr(rs.getString("explain"),spelling));
-            } else{
-                if(spelling == ""){
-                    //jLbSpelling.setText("");
-                    //jLbExplain.setText("");
-                } else{
-                    //jLbSpelling.setText("My dictionary doesn't have this word");
-                    //jLbExplain.setText("");
-                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(DictionaryApp.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DictionaryApp.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NullPointerException techmaster1){
-            //System.out.println("Exception in: "+techmaster1);
+        } catch (NullPointerException dictionary){
             System.out.println("");
         }
     }//GEN-LAST:event_jListSuggestValueChanged
 
     private void jButtonInsertNewWordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonInsertNewWordMouseClicked
-        InsertApp ai = new InsertApp();
-        ai.openInsertApp();
+        InsertApp ia = new InsertApp();
+        ia.openInsertApp();
     }//GEN-LAST:event_jButtonInsertNewWordMouseClicked
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
         DeleteWord dw = new DeleteWord();
@@ -275,28 +254,18 @@ public class DictionaryApp extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
-        UpdateWord uw = new UpdateWord();
-        String spelling = jLabelSpelling.getText();
-        String explain = jTextExplain.getText();
-        if(uw.updateWord(spelling,explain) >= 1){
-            JOptionPane.showMessageDialog(null,"Update \""+spelling+"\" Success!!!");
-        } else{
-            JOptionPane.showMessageDialog(null,"Fail!!!");
-        }
+        this.spelling = jLabelSpelling.getText();
+        this.explain = jTextExplain.getText();
+        UpdateApp ua = new UpdateApp();
+        ua.openUpdateApp();
     }//GEN-LAST:event_jButtonUpdateActionPerformed
 
-    private void jTextSpellingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextSpellingMouseClicked
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String spelling = jTextSpelling.getText();
         ListSuggest ls = new ListSuggest();
         jListSuggest.setModel(ls.listSuggest(spelling));
-    }//GEN-LAST:event_jTextSpellingMouseClicked
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        jTextSpelling.setText("");
         jLabelSpelling.setText("");
         jTextExplain.setText("");
-        DefaultListModel dlm = new DefaultListModel();
-        jListSuggest.setModel(dlm);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -348,16 +317,12 @@ public class DictionaryApp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelBanner;
-    private javax.swing.JLabel jLabelSpelling;
+    public javax.swing.JLabel jLabelSpelling;
     public javax.swing.JList<String> jListSuggest;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JPopupMenu jPopupMenu4;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextPane jTextExplain;
-    private javax.swing.JTextPane jTextPane1;
+    public javax.swing.JTextPane jTextExplain;
     public javax.swing.JTextField jTextSpelling;
     // End of variables declaration//GEN-END:variables
 }

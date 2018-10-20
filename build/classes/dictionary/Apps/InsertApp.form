@@ -61,7 +61,7 @@
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="33" red="0" type="rgb"/>
+          <Color blue="ff" green="33" red="33" type="rgb"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/dictionary/Icons/bannerInsert.jpg"/>
@@ -103,12 +103,14 @@
     <Component class="javax.swing.JComboBox" name="jComboBoxKindOfWord">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="5">
+          <StringArray count="7">
             <StringItem index="0" value="Choose kind of words"/>
             <StringItem index="1" value="Noun"/>
             <StringItem index="2" value="Adjective"/>
             <StringItem index="3" value="Adverb"/>
             <StringItem index="4" value="Verb"/>
+            <StringItem index="5" value="Phrase"/>
+            <StringItem index="6" value="Sentence"/>
           </StringArray>
         </Property>
       </Properties>
@@ -134,12 +136,12 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="jButtonInsert">
       <Properties>
         <Property name="text" type="java.lang.String" value="Insert"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonInsertActionPerformed"/>
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

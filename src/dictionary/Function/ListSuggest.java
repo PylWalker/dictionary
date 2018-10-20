@@ -25,12 +25,15 @@ public class ListSuggest {
         try{
             Connection connection = ConnectionUtils.getMyConnection();
             Statement statement = connection.createStatement();
-            String sql = "SELECT word.spelling FROM word WHERE spelling like '"+spelling+"%'";
-                ResultSet rs = statement.executeQuery(sql);               
-                while(rs.next()){
-                    String wordSpelling = rs.getString("spelling");
-                    dlm.addElement(wordSpelling);
-                }
+            EditStr es = new EditStr();
+            spelling = es.editStr3(spelling);
+            String sql = "SELECT word.spelling FROM word WHERE spelling like '"+spelling+"%' order by word.spelling asc limit 20";
+            System.out.println(spelling);
+            ResultSet rs = statement.executeQuery(sql);               
+            while(rs.next()){
+                String wordSpelling = rs.getString("spelling");
+                dlm.addElement(wordSpelling);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DictionaryApp.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

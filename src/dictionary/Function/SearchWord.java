@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import dictionary.Function.EditStr;
 /**
  *
  * @author chinh
@@ -24,13 +24,15 @@ public class SearchWord {
         try {
             Connection connection = ConnectionUtils.getMyConnection();
             Statement statement = connection.createStatement();
+            EditStr es = new EditStr();
+            spelling = es.editStr3(spelling);
             String sql = "SELECT word.explain FROM word WHERE word.spelling = '"+spelling+"'";
+            System.out.println(sql);
             ResultSet rs = statement.executeQuery(sql);
             if(rs.next()){
-                EditStr es = new EditStr();
                 tmp = es.editStr(rs.getString("explain"),spelling);
             } else{
-                tmp = "";
+                tmp = null;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DictionaryApp.class.getName()).log(Level.SEVERE, null, ex);
